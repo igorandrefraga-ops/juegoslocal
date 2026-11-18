@@ -1,0 +1,100 @@
+/* topo.css — autocontenido: variables, base y estilos del juego. Requiere css/bootstrap.min.css */
+
+/* ===== Variables y base (paleta neón; cámbiala aquí cuando el equipo decida colores) ===== */
+:root{--bg:#0a0a0f;--ink:#e9ecf5;--mute:#98a0b8;--cy:#00e5ff;--mg:#ff2e93;--gr:#39ff88;--glass:rgba(255,255,255,.06);--line:rgba(255,255,255,.14);--disp:"Chakra Petch",system-ui,sans-serif;color-scheme:dark}
+*,*::before,*::after{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:radial-gradient(60rem 40rem at 88% -8%,rgba(255,46,147,.16),transparent 60%),radial-gradient(50rem 40rem at -10% 35%,rgba(0,229,255,.12),transparent 60%),var(--bg);color:var(--ink);font:400 1.05rem/1.6 Barlow,system-ui,sans-serif;overflow-x:hidden}
+h1,h2,h3{font-family:var(--disp);line-height:1.05}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--cy);outline-offset:3px}
+h1{font-weight:700;letter-spacing:-.02em;background:linear-gradient(100deg,var(--cy),var(--gr) 40%,var(--mg));background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:flow 8s linear infinite alternate}
+@keyframes flow{to{background-position:100% 0}}
+.sec{padding:clamp(64px,10vw,120px) clamp(20px,6vw,96px)}
+.wrap{max-width:1200px;margin:auto}
+.lead{color:var(--mute);max-width:36rem;margin-top:12px;font-size:1.05rem;font-weight:400}
+footer{padding:36px 20px;text-align:center;color:var(--mute);font-size:.9rem}
+
+/* Cabecera */
+.top{position:fixed;inset:0 0 auto;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:calc(env(safe-area-inset-top,0px) + 14px) clamp(16px,4vw,48px) 14px;background:rgba(10,10,15,.55);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.06)}
+.logo{font:700 1.4rem var(--disp);text-decoration:none;letter-spacing:.02em}
+.logo i{display:inline-block;width:.6em;height:.6em;border-radius:50%;margin-right:.35em;background:linear-gradient(135deg,var(--cy),var(--mg));box-shadow:0 0 12px var(--cy)}
+.volver{font-weight:600;color:var(--mute);text-decoration:none}
+.volver:hover{color:var(--ink)}
+
+/* Botones (.btn-neon para no chocar con .btn de Bootstrap) */
+.btn-neon{position:relative;display:inline-flex;align-items:center;gap:.5rem;padding:16px 30px;border:0;border-radius:14px;font:700 1.1rem var(--disp);text-decoration:none;color:#04130d;background:linear-gradient(135deg,var(--cy),var(--gr));cursor:pointer;overflow:hidden;transition:transform .2s,box-shadow .3s}
+.btn-neon::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,.65) 50%,transparent 70%);transform:translateX(-120%);transition:transform .6s}
+.btn-neon:hover{transform:translateY(-2px);box-shadow:0 10px 36px -6px rgba(0,229,255,.7);color:#04130d}
+.btn-neon:hover::after{transform:translateX(120%)}
+.btn-neon.ghost{color:var(--ink);background:transparent;border:1px solid var(--line);padding:15px 24px}
+.btn-neon.ghost:hover{box-shadow:none;border-color:var(--ink);color:var(--ink)}
+
+/* ===== Juego ===== */
+.topo-page{padding-top:calc(env(safe-area-inset-top,0px) + 110px);min-height:100svh}
+.topo-page .wrap{max-width:620px}
+.topo-page h1{font-size:clamp(2.4rem,8vw,4rem);padding-bottom:.08em}
+
+/* Marcador */
+.hud{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:28px 0 20px}
+.hud div{padding:14px 10px;text-align:center;border-radius:18px;background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.hud small{display:block;color:var(--mute);font-size:.85rem}
+.hud b{display:block;font:700 2rem var(--disp);line-height:1.25}
+.hud-puntos b{color:var(--cy)}
+.hud-tiempo b{color:var(--gr)}
+.hud-intentos b{color:var(--mg)}
+.hud .bajo b{animation:latido .6s ease-in-out infinite alternate}
+@keyframes latido{to{opacity:.45}}
+
+/* Tablero */
+.tablero-wrap{position:relative;padding:18px;border-radius:26px;background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:0 24px 70px -30px rgba(0,229,255,.5)}
+
+.casilla{position:relative;display:block;width:100%;aspect-ratio:1;padding:0;border:1px solid var(--line);border-radius:18px;overflow:hidden;color:inherit;
+  background:radial-gradient(circle at 50% 85%,rgba(0,229,255,.16),rgba(255,255,255,.03) 70%);
+  -webkit-tap-highlight-color:transparent;touch-action:manipulation;user-select:none;-webkit-user-select:none;cursor:default}
+
+/* Cursor de martillo: quieto, y golpeando mientras se mantiene el clic.
+   Las rutas son relativas a ESTE archivo (css/). El par de números es el punto activo del cursor. */
+.jugando .casilla{cursor:url('../img/martillo.png') 10 10,pointer}
+.jugando .casilla:active{cursor:url('../img/martillo-golpe.png') 10 10,pointer}
+
+/* El hoyo: óvalo negro en la parte baja */
+.hoyo{position:absolute;left:10%;right:10%;bottom:8%;height:28%;border-radius:50%;background:#000;
+  box-shadow:0 0 0 2px rgba(0,229,255,.35),0 0 18px rgba(0,229,255,.35),inset 0 6px 10px rgba(0,0,0,.9)}
+
+/* Zona por donde sube el topo: termina en el centro del hoyo (overflow oculta la parte de abajo) */
+.salida{position:absolute;inset:0 0 22% 0;overflow:hidden;z-index:1}
+.topo{position:absolute;left:15%;width:70%;bottom:0;transform:translateY(100%);transition:transform .15s ease-out;pointer-events:none;user-select:none;-webkit-user-drag:none}
+.casilla.activo .topo,.casilla.golpeado .topo{transform:translateY(0)}
+
+/* Respuesta al clic */
+.casilla.acierto{animation:acierto .35s ease-out}
+.casilla.fallo{animation:fallo .3s ease-out}
+@keyframes acierto{0%{box-shadow:inset 0 0 0 3px var(--gr),0 0 28px var(--gr)}100%{box-shadow:inset 0 0 0 3px transparent,0 0 0 transparent}}
+@keyframes fallo{0%{box-shadow:inset 0 0 0 3px var(--mg),0 0 24px var(--mg);transform:translateX(-4px)}40%{transform:translateX(4px)}100%{box-shadow:inset 0 0 0 3px transparent,0 0 0 transparent;transform:none}}
+
+/* Pantalla de inicio y fin */
+.overlay{position:absolute;inset:0;z-index:5;display:grid;align-content:center;justify-items:center;gap:10px;padding:24px;text-align:center;border-radius:26px;background:rgba(10,10,15,.84);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);cursor:default}
+.overlay[hidden]{display:none}
+.overlay h2{font-size:clamp(2.2rem,8vw,3.2rem)}
+.overlay p{color:var(--mute);margin:0;max-width:26rem}
+.overlay .mejor{color:var(--ink);font-weight:600}
+.overlay .btn-neon{margin-top:14px}
+.overlay.gana h2{color:var(--gr);text-shadow:0 0 24px rgba(57,255,136,.5)}
+.overlay.pierde h2{color:var(--mg);text-shadow:0 0 24px rgba(255,46,147,.5)}
+
+.acciones{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:22px}
+
+@media (max-width:420px){
+  .tablero-wrap{padding:12px}
+  .hud b{font-size:1.6rem}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  h1{animation:none}
+  .btn-neon::after{display:none}
+  .topo{transition:none}
+  .casilla.fallo{animation-name:fallo-quieto}
+  .hud .bajo b{animation:none}
+  @keyframes fallo-quieto{0%{box-shadow:inset 0 0 0 3px var(--mg)}100%{box-shadow:inset 0 0 0 3px transparent}}
+}
