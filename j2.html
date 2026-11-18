@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Neon Dash: corre por tres carriles en tu navegador</title>
+  <meta name="description" content="Neon Dash es un juego de carriles para jugar gratis en el navegador, con teclado en PC y gestos en el móvil.">
+  <link rel="stylesheet" href="styles.css">
+  <script src="main.js" defer></script>
+</head>
+<body>
+
+  <header class="top">
+    <a class="logo" href="#"><i></i>Neon Arcade</a>
+    <a class="nav" href="#jugar">Jugar</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <canvas id="fx" aria-hidden="true"></canvas>
+      <div class="hero-in">
+        <h1>Neon Dash</h1>
+        <p>Esquiva muros, salta barreras y recoge energía en una pista de tres carriles. Sin instalar nada, en PC y en el móvil.</p>
+        <div class="acts">
+          <a class="btn" href="#jugar">Jugar ahora</a>
+          <a class="btn ghost" href="#juego">Ver controles</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="juego">
+      <div class="wrap">
+        <h2 class="rv">El juego</h2>
+        <p class="lead rv">Cada partida es más rápida que la anterior. Dura lo que dure tu pulso.</p>
+
+        <div class="games">
+          <article class="card g1 rv" data-game="1">
+            <div class="cover">
+              <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" aria-hidden="true">
+                <path d="M32 6 54 54 32 44 10 54Z"/>
+              </svg>
+              <small>1 jugador</small>
+            </div>
+            <div class="body">
+              <div class="tags"><span>Arcade</span><span>Reflejos</span><span>PC y móvil</span></div>
+              <h3>Neon Dash</h3>
+              <p>Cambia de carril para esquivar los muros, salta las barreras bajas y usa el impulso cuando necesites ganar puntos rápido.</p>
+              <div class="stats">
+                <span><b>3</b>carriles</span>
+                <span><b>2</b>tipos de obstáculo</span>
+                <span><b>Récord</b>guardado en tu navegador</span>
+              </div>
+              <div class="acts">
+                <a class="btn play" href="#jugar">Jugar</a>
+                <button class="btn ghost info" type="button">Cómo se juega</button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="jugar">
+      <div class="wrap">
+        <h2 class="rv">Tu turno</h2>
+        <p class="lead rv">Los muros rellenos no se pueden saltar: cambia de carril. Las barreras huecas se saltan con Espacio o con un toque.</p>
+
+        <div class="stage rv">
+          <div class="hud">
+            <span>Puntos<b id="sc">0</b></span>
+            <span>Récord<b id="hi">0</b></span>
+            <span>Impulso<b id="bs">100</b>%</span>
+          </div>
+          <canvas id="game" width="480" height="720" role="img" aria-label="Pista de Neon Dash"></canvas>
+          <button id="start" class="btn" type="button">Jugar</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec">
+      <div class="wrap">
+        <h2 class="rv">Por qué jugar aquí</h2>
+        <div class="why">
+          <div class="rv">
+            <h3>Sin instalar nada</h3>
+            <p>Abre la página y juega. Funciona en cualquier navegador moderno.</p>
+          </div>
+          <div class="rv">
+            <h3>Controles para tu dispositivo</h3>
+            <p>Teclado en el ordenador. Deslizar y tocar en el móvil.</p>
+          </div>
+          <div class="rv">
+            <h3>Tu récord se queda contigo</h3>
+            <p>Se guarda en este navegador, así que puedes volver a superarlo mañana.</p>
+          </div>
+        </div>
+
+        <div class="join rv">
+          <h2>Avísame de nuevos juegos</h2>
+          <p class="lead">Deja tu correo y te escribiremos cuando salga el siguiente.</p>
+          <form id="sub">
+            <input type="email" name="email" placeholder="tu@correo.com" autocomplete="email" aria-label="Correo electrónico" required>
+            <button class="btn mg" type="submit">Suscribirme</button>
+          </form>
+          <p id="ok" role="status"></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>Neon Arcade. Hecho con HTML, CSS y JavaScript.</footer>
+
+  <dialog id="modal" aria-labelledby="m-title">
+    <h3 id="m-title"></h3>
+    <p id="m-tip"></p>
+    <dl class="keys" id="m-keys"></dl>
+    <div class="acts">
+      <a id="m-go" class="btn" href="#jugar">Jugar</a>
+      <button id="m-close" class="btn ghost" type="button">Cerrar</button>
+    </div>
+  </dialog>
+
+</body>
+</html>
