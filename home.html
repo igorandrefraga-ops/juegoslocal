@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DuoPlay: dos juegos gratis en tu navegador</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+<header class="top">
+  <a class="logo" href="#"><i></i>DuoPlay</a>
+  <a class="nav" href="#juegos">Jugar</a>
+</header>
+
+<main>
+<!-- HERO -->
+<section class="hero">
+  <canvas id="fx" aria-hidden="true"></canvas>
+  <div class="hero-in">
+    <h1>Dos juegos.<br>Un solo clic.</h1>
+    <p>Gratis, en tu navegador y sin instalar nada. Elige uno, entra a la partida y demuestra quién manda en el ranking.</p>
+    <a class="btn" href="#juegos">Ver los juegos</a>
+  </div>
+</section>
+
+<!-- VITRINA -->
+<section class="sec" id="juegos">
+  <div class="wrap">
+    <h2 class="rv">Elige y entra</h2>
+    <p class="lead rv">Los dos corren directo en el navegador, en el móvil o en la computadora.</p>
+
+    <div class="games">
+      <!-- Juego 1 -->
+      <article class="card g1 rv" data-game="1">
+        <div class="cover">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>
+          <small>Tu portada aquí</small>
+        </div>
+        <div class="body">
+          <div class="tags"><span>Arcade</span><span>Velocidad</span><span>Un jugador</span></div>
+          <h3>Neon Dash</h3>
+          <p>Corres por una autopista de luz que no perdona errores. Esquivas, encadenas combos y subes en el ranking con partidas de tres minutos. Cada intento arranca más rápido que el anterior.</p>
+          <div class="stats"><div><b>2,4 mil</b>jugadores activos</div><div><b>3 min</b>por partida</div><div><b>Gratis</b>en navegador</div></div>
+          <div class="acts">
+            <a class="btn play" href="enlace-juego-1">¡JUGAR AHORA!</a>
+            <button class="btn ghost info" type="button">Cómo se juega</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Juego 2 -->
+      <article class="card g2 rv" data-game="2">
+        <div class="cover">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="7.5"/><path d="M12 1.5v6M12 16.5v6M1.5 12h6M16.5 12h6"/></svg>
+          <small>Tu portada aquí</small>
+        </div>
+        <div class="body">
+          <div class="tags"><span>Acción</span><span>Multijugador</span><span>PvP</span></div>
+          <h3>Void Arena</h3>
+          <p>Entras a una arena flotante con hasta ocho jugadores. Tienes un arma, un escudo y un mapa que se achica cada treinta segundos. Gana el último que siga en pie.</p>
+          <div class="stats"><div><b>8</b>jugadores por sala</div><div><b>5 min</b>por ronda</div><div><b>Gratis</b>en navegador</div></div>
+          <div class="acts">
+            <a class="btn mg play" href="enlace-juego-2">¡JUGAR AHORA!</a>
+            <button class="btn ghost info" type="button">Cómo se juega</button>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- CAPTACIÓN -->
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <h2 class="rv">¿Por qué jugar aquí?</h2>
+    <div class="why">
+      <div class="rv" style="--c:var(--cy)"><h3>Sin descargas</h3><p>Abres el enlace y juegas. Sin instaladores ni espacio que liberar.</p></div>
+      <div class="rv" style="--c:var(--gr)"><h3>Juega al instante</h3><p>Cada partida carga en segundos y dura pocos minutos, justo para un descanso.</p></div>
+      <div class="rv" style="--c:var(--mg)"><h3>Reta a tus amigos</h3><p>Copia el enlace, mándalo al chat y compárense en el ranking. Quien pierde pide revancha.</p></div>
+    </div>
+
+    <div class="join rv">
+      <h2>Avisa cuando haya algo nuevo</h2>
+      <p class="lead">Déjanos tu correo y te escribimos cuando salga una actualización o un torneo.</p>
+      <form id="sub">
+        <input type="email" name="email" placeholder="tu@correo.com" aria-label="Correo electrónico" required>
+        <button class="btn" type="submit">Avisarme</button>
+      </form>
+      <p id="ok" role="status"></p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>© 2026 DuoPlay. Hecho para jugar.</footer>
+
+<!-- Modal de controles -->
+<dialog id="modal" aria-labelledby="m-title">
+  <h3 id="m-title"></h3>
+  <p id="m-tip"></p>
+  <dl class="keys" id="m-keys"></dl>
+  <div class="acts">
+    <a class="btn" id="m-go" href="#">¡JUGAR AHORA!</a>
+    <button class="btn ghost" type="button" id="m-close">Volver</button>
+  </div>
+</dialog>
+
+<script src="js/main.js" defer></script>
+</body>
+</html>
