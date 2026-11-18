@@ -86,9 +86,10 @@ dialog p{color:var(--mute);margin-top:6px}
 .keys{display:grid;grid-template-columns:auto 1fr;gap:12px 16px;margin:22px 0 26px;align-items:center}
 .keys dt{padding:4px 12px;border:1px solid var(--line);border-bottom-width:3px;border-radius:8px;background:rgba(255,255,255,.06);font:600 .95rem var(--disp);white-space:nowrap}
 
+
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.rv{opacity:1;translate:none;transition:none}h1{animation:none}.btn::after{display:none}}
 
-/* ===== Juego Neon Dash (añadido) ===== */
+
 html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 84px)}
 .games{grid-template-columns:minmax(0,560px)}
 .why div:nth-child(1){--c:var(--cy)}
@@ -98,3 +99,6 @@ html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 84px)}
 #game{display:block;width:min(100%,420px);height:auto;aspect-ratio:2/3;border:1px solid var(--line);border-radius:22px;background:var(--bg);touch-action:none;box-shadow:0 24px 70px -24px rgba(0,229,255,.45)}
 .hud{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 28px;color:var(--mute)}
 .hud b{margin-left:6px;font:700 1.4rem var(--disp);color:var(--ink)}
+
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.rv{opacity:1;translate:none;transition:none}h1{animation:none}.btn::after{display:none}}
+

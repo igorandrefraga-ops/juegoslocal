@@ -69,18 +69,35 @@
 
   /* Modal de instrucciones (edita textos y teclas de cada juego aquí) */
   const GAMES = {
-    1: { name: 'Neon Dash', tip: 'En el móvil: desliza para cambiar de carril y toca la pantalla para saltar.',
-         keys: [['← →  /  A D', 'Cambiar de carril'], ['Espacio', 'Saltar'], ['Shift', 'Impulso, se recarga solo'], ['P', 'Pausa']] },
-    2: { name: 'Void Arena', tip: 'En el móvil: joystick a la izquierda para moverte, botones a la derecha para disparar.',
-         keys: [['W A S D', 'Moverte'], ['Ratón', 'Apuntar'], ['Clic izq.', 'Disparar'], ['Q', 'Activar escudo'], ['Esc', 'Pausa']] }
+    1: { 
+      name: 'Neon Dash', 
+      tip: 'En el móvil: desliza para cambiar de carril y toca la pantalla para saltar.', 
+      keys: [
+        ['← → / A D', 'Cambiar de carril'], 
+        ['Espacio', 'Saltar'], 
+        ['Shift', 'Impulso, se recarga solo'], 
+        ['P', 'Pausa']
+      ] 
+    },
+    2: { 
+      name: 'Pega al Topo', 
+      tip: 'En el móvil: toca directamente sobre los topos cuando salgan de su madriguera.', 
+      keys: [
+        ['Ratón', 'Mover el mazo'], 
+        ['Clic izq.', 'Golpear al topo'], 
+        ['1 - 9', 'Golpear madriguera rápida'], 
+        ['P / Esc', 'Pausa']
+      ] 
+    }
   };
+
   const modal = $('#modal');
   $$('.card').forEach(card => {
     $('.info', card).addEventListener('click', () => {
       const g = GAMES[card.dataset.game];
       $('#m-title').textContent = 'Cómo se juega ' + g.name;
       $('#m-tip').textContent = g.tip;
-      $('#m-keys').innerHTML = g.keys.map(k => `<dt>${k[0]}</dt><dd>${k[1]}</dd>`).join('');
+      $('#m-keys').innerHTML = g.keys.map(k => '<dt>' + k.at(0) + '</dt><dd>' + k.at(1) + '</dd>').join('');
       const go = $('#m-go'); go.href = $('.play', card).getAttribute('href');
       go.className = 'btn' + (card.dataset.game === '2' ? ' mg' : '');
       modal.showModal();
@@ -95,13 +112,14 @@
     $('#ok').textContent = 'Listo, te avisaremos a ' + e.target.email.value + '.';
     e.target.reset();
   });
+
 })();
 
 /* ===== Neon Dash (añadido): juego de tres carriles ===== */
 (() => {
   const $ = s => document.querySelector(s);
   const cv = $('#game'), g = cv.getContext('2d');
-  const W = 480, H = 720, PY = 600, LX = [100, 240, 380];
+  const W = 480, H = 720, PY = 600, LX = new Array(100, 240, 380);
   const FONT = "700 44px 'Chakra Petch',system-ui,sans-serif";
   let s, raf = 0, hi = 0, shift = false, px = 0;
   try { hi = +localStorage.getItem('nd-hi') || 0; } catch (e) {}
@@ -167,7 +185,8 @@
     g.clearRect(0, 0, W, H); g.fillStyle = '#0a0a0f'; g.fillRect(0, 0, W, H);
     g.strokeStyle = 'rgba(255,255,255,.14)'; g.lineWidth = 2;
     const off = (s.t * s.sp) % 60;
-    for (let i = -1; i < 13; i++) for (const x of [170, 310]) {
+    const lanes = new Array(170, 310);
+    for (let i = -1; i < 13; i++) for (const x of lanes) {
       g.beginPath(); g.moveTo(x, i * 60 + off); g.lineTo(x, i * 60 + off + 30); g.stroke();
     }
     g.shadowBlur = 16;
@@ -220,8 +239,5 @@
     if (Math.abs(dx) > 30) move(dx > 0 ? 1 : -1); else jump();
   });
   $('#start').addEventListener('click', start);
-  $('#m-go').addEventListener('click', () => $('#modal').close());
-  new IntersectionObserver(([e]) => { if (!e.isIntersecting) pause(true); }, { threshold: .3 }).observe(cv);
 
-  reset();
 })();
