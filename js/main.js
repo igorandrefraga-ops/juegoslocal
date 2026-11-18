@@ -69,11 +69,27 @@
 
   /* Modal de instrucciones (edita textos y teclas de cada juego aquí) */
   const GAMES = {
-    1: { name: 'Neon Dash', tip: 'En el móvil: desliza para cambiar de carril y toca la pantalla para saltar.',
-         keys: [['← →  /  A D', 'Cambiar de carril'], ['Espacio', 'Saltar'], ['Shift', 'Impulso, se recarga solo'], ['P', 'Pausa']] },
-    2: { name: 'Void Arena', tip: 'En el móvil: joystick a la izquierda para moverte, botones a la derecha para disparar.',
-         keys: [['W A S D', 'Moverte'], ['Ratón', 'Apuntar'], ['Clic izq.', 'Disparar'], ['Q', 'Activar escudo'], ['Esc', 'Pausa']] }
-  };
+  1: { 
+    name: 'Neon Dash', 
+    tip: 'En el móvil: desliza para cambiar de carril y toca la pantalla para saltar.', 
+    keys: [
+      ['← → / A D', 'Cambiar de carril'], 
+      ['Espacio', 'Saltar'], 
+      ['Shift', 'Impulso, se recarga solo'], 
+      ['P', 'Pausa']
+    ] 
+  },
+  2: { 
+    name: 'Pega al Topo', 
+    tip: 'En el móvil: toca directamente sobre los topos cuando salgan de su madriguera.', 
+    keys: [
+      ['Ratón', 'Mover el mazo'], 
+      ['Clic izq.', 'Golpear al topo'], 
+      ['1 - 9', 'Golpear madriguera rápida'], 
+      ['P / Esc', 'Pausa']
+    ] 
+  }
+};
   const modal = $('#modal');
   $$('.card').forEach(card => {
     $('.info', card).addEventListener('click', () => {
