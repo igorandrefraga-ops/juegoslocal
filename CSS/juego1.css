@@ -53,10 +53,9 @@ footer{padding:36px 20px;text-align:center;color:var(--mute);font-size:.9rem}
   background:radial-gradient(circle at 50% 85%,rgba(0,229,255,.16),rgba(255,255,255,.03) 70%);
   -webkit-tap-highlight-color:transparent;touch-action:manipulation;user-select:none;-webkit-user-select:none;cursor:default}
 
-/* Cursor de martillo: quieto, y golpeando mientras se mantiene el clic.
-   Las rutas son relativas a ESTE archivo (css/). El par de números es el punto activo del cursor. */
-.jugando .casilla{cursor:url('../img/martillo.png') 10 10,pointer}
-.jugando .casilla:active{cursor:url('../img/martillo-golpe.png') 10 10,pointer}
+/* Martillo: el cursor del sistema se oculta mientras se juega y el martillo lo dibuja el JS (img.martillo) */
+.jugando,.jugando *{cursor:none}
+.martillo{position:fixed;left:0;top:0;width:64px;height:64px;display:none;pointer-events:none;z-index:50;user-select:none;-webkit-user-drag:none}
 
 /* El hoyo: óvalo negro en la parte baja */
 .hoyo{position:absolute;left:10%;right:10%;bottom:8%;height:28%;border-radius:50%;background:#000;

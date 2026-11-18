@@ -1,7 +1,6 @@
 (() => {
   /* ===== Reglas del juego: cambia estos números y todo se actualiza ===== */
   const CONFIG = {
-    meta: 10,            // topos a golpear para ganar
     tiempo: 30,          // segundos
     intentos: 5,         // fallos permitidos
     visibleInicial: 1000,// ms que el topo se queda arriba al empezar
@@ -22,6 +21,13 @@
   const overlay = $('#overlay'), ovTitulo = $('#ov-titulo'), ovTexto = $('#ov-texto'), ovMejor = $('#ov-mejor');
   const btnJugar = $('#btn-jugar');
 
+  // Martillo que sigue al mouse (reemplaza al cursor por CSS)
+  const mazo = new Image();
+  mazo.className = 'martillo';
+  mazo.src = 'img/martillo.png';
+  mazo.draggable = false;
+  document.body.appendChild(mazo);
+
   // Precarga para que el cambio de imagen no parpadee
   [IMG_TOPO, IMG_ATURDIDO, 'img/martillo.png', 'img/martillo-golpe.png'].forEach(src => { new Image().src = src; });
 
@@ -31,7 +37,7 @@
 
   /* ----- Marcador ----- */
   function pintar(segundos) {
-    elPuntos.textContent = puntos + ' / ' + CONFIG.meta;
+    elPuntos.textContent = puntos;
     elIntentos.textContent = intentos;
     elIntentos.parentElement.classList.toggle('bajo', jugando && intentos === 1);
     if (segundos !== undefined) {
@@ -103,13 +109,12 @@
       puntos++;
       if (puntos % CONFIG.cadaAciertos === 0) visible = Math.max(CONFIG.visibleMin, visible - CONFIG.pasoVisible);
       pintar();
-      if (puntos >= CONFIG.meta) { terminar(true); return; }
       tOcultar = setTimeout(() => { ocultar(i); programarSiguiente(); }, CONFIG.aturdido);
     } else {
       intentos--;
       destello(c, 'fallo');
       pintar();
-      if (intentos <= 0) terminar(false, 'Te quedaste sin intentos.');
+      if (intentos <= 0) terminar('Te quedaste sin intentos.');
     }
   }
 
@@ -127,17 +132,18 @@
     reloj = setInterval(() => {
       const resto = Math.max(0, Math.ceil((finTiempo - Date.now()) / 1000));
       pintar(resto);
-      if (resto <= 0) terminar(false, 'Se acabó el tiempo.');
+      if (resto <= 0) terminar('Se acabó el tiempo.');
     }, 200);
 
     tSiguiente = setTimeout(mostrarTopo, 600);
   }
 
-  function terminar(gano, motivo) {
+  function terminar(motivo) {
     if (!jugando) return;
     jugando = false;
     limpiarTimers();
     wrap.classList.remove('jugando');
+    mazo.style.display = 'none';
     pintar();
 
     const mejor = Math.max(mejorPuntaje(), puntos);
@@ -146,18 +152,16 @@
     // Pequeña pausa para que se vea el último golpe antes de la pantalla final
     tFin = setTimeout(() => {
       resetCasillas();
-      overlay.classList.remove('gana', 'pierde');
-      overlay.classList.add(gano ? 'gana' : 'pierde');
-      ovTitulo.textContent = gano ? '¡Ganaste!' : 'Game over';
-      ovTexto.textContent = gano
-        ? 'Golpeaste ' + puntos + ' topos y te sobraron ' + intentos + ' intentos.'
-        : motivo + ' Golpeaste ' + puntos + ' de ' + CONFIG.meta + ' topos.';
+      overlay.classList.remove('gana');
+      overlay.classList.add('pierde');
+      ovTitulo.textContent = 'Game over';
+      ovTexto.textContent = motivo + ' Golpeaste ' + puntos + (puntos === 1 ? ' topo.' : ' topos.');
       ovMejor.textContent = 'Mejor puntaje: ' + mejor;
       ovMejor.hidden = false;
       btnJugar.textContent = 'Jugar otra vez';
       overlay.hidden = false;
       btnJugar.focus({ preventScroll: true });
-    }, gano ? 450 : 150);
+    }, 150);
   }
 
   /* ----- Eventos ----- */
@@ -172,13 +176,23 @@
     if (c && e.detail === 0) golpear(casillas.indexOf(c));
   });
 
+  // Martillo que sigue al mouse
+  wrap.addEventListener('pointermove', e => {
+    if (!jugando || e.pointerType !== 'mouse') return;
+    mazo.style.transform = 'translate(' + (e.clientX - 10) + 'px,' + (e.clientY - 10) + 'px)';
+    mazo.style.display = 'block';
+  });
+  wrap.addEventListener('pointerleave', () => { mazo.style.display = 'none'; });
+  wrap.addEventListener('pointerdown', e => { if (e.pointerType === 'mouse') mazo.src = 'img/martillo-golpe.png'; });
+  document.addEventListener('pointerup', () => { mazo.src = 'img/martillo.png'; });
+
   btnJugar.addEventListener('click', iniciar);
   $('#btn-reiniciar').addEventListener('click', iniciar);
 
   /* ----- Estado inicial ----- */
   intentos = CONFIG.intentos;
   pintar(CONFIG.tiempo);
-  ovTexto.textContent = 'Golpea ' + CONFIG.meta + ' topos en ' + CONFIG.tiempo + ' segundos. Tienes ' + CONFIG.intentos + ' intentos.';
+  ovTexto.textContent = 'Golpea todos los topos que puedas en ' + CONFIG.tiempo + ' segundos. Tienes ' + CONFIG.intentos + ' intentos.';
   const m = mejorPuntaje();
   if (m > 0) { ovMejor.textContent = 'Mejor puntaje: ' + m; ovMejor.hidden = false; }
 })();
